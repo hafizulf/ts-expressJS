@@ -1,0 +1,18 @@
+{
+  "name": "demo-ts-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon ./build/app.js",
+    "ts": "rm -rf ./build && tsc",
+    "tsc": "rm -rf ./build && tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "typescript": "^5.1.6"
+  }
+}
