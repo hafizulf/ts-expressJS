@@ -5,6 +5,8 @@ import compression from 'compression';
 import morgan from 'morgan';
 import { config as dotenv } from 'dotenv';
 
+import AuthRoutes from './routers/AuthRoutes';
+
 class App {
   public app: Application;
 
@@ -26,6 +28,8 @@ class App {
     this.app.route('/api/v1/').get((req: Request, res: Response): Response => {
       return res.send('TypeScript ExpressJS!');
     });
+
+    this.app.use('/api/v1/auth', AuthRoutes);
   }
 }
 
