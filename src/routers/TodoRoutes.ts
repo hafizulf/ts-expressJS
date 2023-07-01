@@ -1,8 +1,10 @@
 import BaseRoutes from './BaseRoutes';
+import { isLoggedIn } from '../middleware/Authentication';
+import TodoController from '../controllers/TodoController';
 
 class TodoRoutes extends BaseRoutes {
   routes(): void {
-    throw new Error('Method not implemented.');
+    this.router.post('/', isLoggedIn, TodoController.create);
   }
 }
 

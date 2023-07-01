@@ -25,6 +25,10 @@ class Authentication {
 
     return token;
   };
+
+  public static verifyToken = (token: string): string | object => {
+    return jwt.verify(token, process.env.JWT_SECRET_KEY || 'secret');
+  };
 }
 
 export default Authentication;
