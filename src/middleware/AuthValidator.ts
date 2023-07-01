@@ -6,7 +6,7 @@ class AuthValidator {
 
   constructor() {
     this.validate = [
-      check('nama')
+      check('name')
         .notEmpty()
         .withMessage('is required')
         .isString()
