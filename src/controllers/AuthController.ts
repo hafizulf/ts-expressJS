@@ -18,9 +18,27 @@ class AuthController {
     }
   };
 
-  login(req: Request, res: Response): Response {
-    return res.send('Login Page!');
-  }
+  login = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const isLoggedIn = await AuthService.login(req.body);
+
+      return res.status(200).json({
+        status: 'OK',
+        token: isLoggedIn,
+      });
+    } catch (error: any) {
+      if (error.msg)
+        return res.status(404).json({
+          status: 'BAD REQUEST',
+          error: error.msg,
+        });
+
+      return res.status(500).json({
+        status: 'INTERNAL SERVER ERROR',
+        error: error.message,
+      });
+    }
+  };
 }
 
 export default new AuthController();

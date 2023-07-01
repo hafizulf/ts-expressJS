@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import IRouter from './IRouter';
-import validate from '../middleware/AuthValidator';
+import registerValidate from '../middleware/RegisterValidator';
+import loginValidate from '../middleware/LoginValidator';
 import AuthController from '../controllers/AuthController';
 
 class AuthRoutes implements IRouter {
@@ -12,8 +13,8 @@ class AuthRoutes implements IRouter {
   }
 
   routes(): void {
-    this.router.post('/register', validate, AuthController.register);
-    this.router.get('/login', AuthController.login);
+    this.router.post('/register', registerValidate, AuthController.register);
+    this.router.post('/login', loginValidate, AuthController.login);
   }
 }
 
