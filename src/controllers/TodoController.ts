@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
+import IController from './IController';
 import TodoService from '../services/TodoService';
 import ResponseUtility from '../utils/ResponseUtility';
 
-class TodoController {
+class TodoController implements IController {
   create = async (req: Request, res: Response): Promise<Response> => {
     try {
       const data = {
@@ -28,6 +29,18 @@ class TodoController {
       return ResponseUtility.internalServerError(res, error.message);
     }
   };
+
+  findOne(req: Request, res: Response): Promise<Response> {
+    throw new Error('Method not implemented.');
+  }
+
+  update(req: Request, res: Response): Promise<Response> {
+    throw new Error('Method not implemented.');
+  }
+
+  delete(req: Request, res: Response): Promise<Response> {
+    throw new Error('Method not implemented.');
+  }
 }
 
 export default new TodoController();
