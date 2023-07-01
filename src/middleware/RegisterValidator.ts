@@ -36,7 +36,7 @@ class AuthValidator {
             errorMessage.push(`${(<any>e).path}: ${e.msg}`);
           });
 
-          return res.status(404).json({
+          return res.status(400).json({
             status: 'BAD REQUEST',
             error: errorMessage,
           });
