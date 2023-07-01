@@ -30,9 +30,18 @@ class TodoController implements IController {
     }
   };
 
-  findOne(req: Request, res: Response): Promise<Response> {
-    throw new Error('Method not implemented.');
-  }
+  findOne = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const user_id = req.app.locals.credential.userId;
+      const todo_id = parseInt(req.params.id);
+
+      const todo = await TodoService.findOne(user_id, todo_id);
+
+      return ResponseUtility.ok(res, todo);
+    } catch (error: any) {
+      return ResponseUtility.internalServerError(res, error.message);
+    }
+  };
 
   update(req: Request, res: Response): Promise<Response> {
     throw new Error('Method not implemented.');

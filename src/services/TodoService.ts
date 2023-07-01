@@ -15,6 +15,11 @@ class TodoService {
     const todos = await db.todo.findAll({ where: { user_id } });
     return todos;
   };
+
+  findOne = async (user_id: number, todo_id: number): Promise<any> => {
+    const todo = await db.todo.findOne({ where: { user_id, id: todo_id } });
+    return todo;
+  };
 }
 
 export default new TodoService();
