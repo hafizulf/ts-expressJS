@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import TodoService from '../services/TodoService';
+import ResponseUtility from '../utils/ResponseUtility';
 
 class TodoController {
   create = async (req: Request, res: Response): Promise<Response> => {
@@ -11,15 +12,9 @@ class TodoController {
 
       await TodoService.create(data);
 
-      return res.status(201).json({
-        status: 'CREATED',
-        message: 'Todo created successfully',
-      });
+      return ResponseUtility.created(res, 'Todo created successfully');
     } catch (error: any) {
-      return res.status(500).json({
-        status: 'INTERNAL SERVER ERROR',
-        error: error.message,
-      });
+      return ResponseUtility.internalServerError(res, error.message);
     }
   };
 
@@ -28,15 +23,9 @@ class TodoController {
       const user_id = req.app.locals.credential.userId;
       const todos = await TodoService.findAll(user_id);
 
-      return res.status(200).json({
-        status: 'OK',
-        data: todos,
-      });
+      return ResponseUtility.ok(res, todos);
     } catch (error: any) {
-      return res.status(500).json({
-        status: 'INTERNAL SERVER ERROR',
-        error: error.message,
-      });
+      return ResponseUtility.internalServerError(res, error.message);
     }
   };
 }

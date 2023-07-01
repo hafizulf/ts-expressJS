@@ -1,5 +1,6 @@
 import { check, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
+import ResponseUtility from '../utils/ResponseUtility';
 
 class AuthValidator {
   validate: any[];
@@ -36,10 +37,7 @@ class AuthValidator {
             errorMessage.push(`${(<any>e).path}: ${e.msg}`);
           });
 
-          return res.status(400).json({
-            status: 'BAD REQUEST',
-            error: errorMessage,
-          });
+          return ResponseUtility.badRequest(res, errorMessage);
         }
 
         return next();

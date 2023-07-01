@@ -1,20 +1,15 @@
 import { Request, Response } from 'express';
 import AuthService from '../services/AuthService';
+import ResponseUtility from '../utils/ResponseUtility';
 
 class AuthController {
   register = async (req: Request, res: Response): Promise<Response> => {
     try {
       await AuthService.register(req.body);
 
-      return res.status(201).json({
-        status: 'CREATED',
-        message: 'User created successfully',
-      });
+      return ResponseUtility.created(res, 'User created successfully');
     } catch (error: any) {
-      return res.status(500).json({
-        status: 'INTERNAL SERVER ERROR',
-        error: error.message,
-      });
+      return ResponseUtility.internalServerError(res, error.message);
     }
   };
 
@@ -27,16 +22,8 @@ class AuthController {
         token: isLoggedIn,
       });
     } catch (error: any) {
-      if (error.msg)
-        return res.status(400).json({
-          status: 'BAD REQUEST',
-          error: error.msg,
-        });
-
-      return res.status(500).json({
-        status: 'INTERNAL SERVER ERROR',
-        error: error.message,
-      });
+      if (error.msg) return ResponseUtility.badRequest(res, error.msg);
+      return ResponseUtility.internalServerError(res, error.message);
     }
   };
 }

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Auth from '../utils/Authentication';
+import ResponseUtility from '../utils/ResponseUtility';
 
 export const isLoggedIn = (
   req: Request,
@@ -7,10 +8,7 @@ export const isLoggedIn = (
   next: NextFunction
 ): Response | void => {
   if (!req.headers.authorization) {
-    return res.status(401).json({
-      status: 'UNAUTHORIZED',
-      error: 'Token is not provided!',
-    });
+    return ResponseUtility.unauthorized(res, 'Token is required');
   }
 
   try {
@@ -20,8 +18,6 @@ export const isLoggedIn = (
     req.app.locals.credential = credential;
     return next();
   } catch (error) {
-    return res.status(401).json({
-      error: (<any>error).message,
-    });
+    return ResponseUtility.unauthorized(res, 'Token is invalid');
   }
 };
