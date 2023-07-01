@@ -15,15 +15,15 @@ class TodoValidator {
         const error = validationResult(req);
 
         if (!error.isEmpty()) {
-          const errrorMessage: any = [];
+          const errorMessage: any = [];
 
           error.array({ onlyFirstError: true }).map((e) => {
-            errrorMessage.push(`${(<any>e).path}: ${e.msg}`);
+            errorMessage.push(`${(<any>e).path}: ${e.msg}`);
           });
 
           return res.status(404).json({
             status: 'BAD REQUEST',
-            error: errrorMessage,
+            error: errorMessage,
           });
         }
 
