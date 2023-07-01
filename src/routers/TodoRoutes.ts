@@ -5,7 +5,9 @@ import TodoController from '../controllers/TodoController';
 
 class TodoRoutes extends BaseRoutes {
   routes(): void {
-    this.router.post('/', isLoggedIn, validate, TodoController.create);
+    this.router
+      .post('/', isLoggedIn, validate, TodoController.create)
+      .get('/', isLoggedIn, TodoController.findAll);
   }
 }
 
