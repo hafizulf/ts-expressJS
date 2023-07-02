@@ -33,25 +33,20 @@ class AuthService {
     const user = await db.user.findOne({
       where: { username },
     });
-    if (!user)
-      return new Promise((resolve, reject) =>
-        reject({ msg: 'User not found' })
-      );
+    if (!user) throw { msg: 'User not found' };
 
     const comparedPassword = await Authentication.compare(
       password,
       user.password
     );
-    if (!comparedPassword)
-      return new Promise((resolve, reject) =>
-        reject({ msg: 'Invalid password' })
-      );
+    if (!comparedPassword) throw { msg: 'Invalid password' };
 
-    return Authentication.generateToken({
+    const token = Authentication.generateToken({
       userId: user.id,
       username: user.username,
       email: user.email,
     });
+    return token;
   };
 }
 
