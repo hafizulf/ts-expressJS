@@ -58,7 +58,17 @@ class TodoController implements IController {
   };
 
   delete = async (req: Request, res: Response): Promise<Response> => {
-    throw new Error('Method not implemented.');
+    const user_id = req.app.locals.credential.userId;
+    const todo_id = parseInt(req.params.id);
+
+    try {
+      await TodoService.delete(user_id, todo_id);
+
+      return ResponseUtility.ok(res, 'Todo deleted successfully');
+    } catch (error: any) {
+      if (error.msg) return ResponseUtility.badRequest(res, error.msg);
+      return ResponseUtility.internalServerError(res, error.message);
+    }
   };
 }
 
