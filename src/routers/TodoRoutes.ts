@@ -8,7 +8,8 @@ class TodoRoutes extends BaseRoutes {
     this.router
       .post('/', isLoggedIn, validate, TodoController.create)
       .get('/', isLoggedIn, TodoController.findAll)
-      .get('/:id', isLoggedIn, TodoController.findOne);
+      .get('/:id', isLoggedIn, TodoController.findOne)
+      .put('/:id', isLoggedIn, validate, TodoController.update);
   }
 }
 

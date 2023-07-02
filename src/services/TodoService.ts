@@ -20,6 +20,20 @@ class TodoService {
     const todo = await db.todo.findOne({ where: { user_id, id: todo_id } });
     return todo;
   };
+
+  update = async (
+    user_id: number,
+    todo_id: number,
+    data: object
+  ): Promise<void> => {
+    const todo = await db.todo.findOne({ where: { user_id, id: todo_id } });
+    if (!todo) {
+      return new Promise((resolve, reject) => {
+        reject({ msg: 'Todo not found' });
+      });
+    }
+    await db.todo.update(data, { where: { user_id, id: todo_id } });
+  };
 }
 
 export default new TodoService();

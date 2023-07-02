@@ -43,13 +43,23 @@ class TodoController implements IController {
     }
   };
 
-  update(req: Request, res: Response): Promise<Response> {
-    throw new Error('Method not implemented.');
-  }
+  update = async (req: Request, res: Response): Promise<Response> => {
+    const user_id = req.app.locals.credential.userId;
+    const todo_id = parseInt(req.params.id);
 
-  delete(req: Request, res: Response): Promise<Response> {
+    try {
+      await TodoService.update(user_id, todo_id, req.body);
+
+      return ResponseUtility.ok(res, 'Todo updated successfully');
+    } catch (error: any) {
+      if (error.msg) return ResponseUtility.badRequest(res, error.msg);
+      return ResponseUtility.internalServerError(res, error.message);
+    }
+  };
+
+  delete = async (req: Request, res: Response): Promise<Response> => {
     throw new Error('Method not implemented.');
-  }
+  };
 }
 
 export default new TodoController();
