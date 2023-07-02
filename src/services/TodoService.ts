@@ -27,21 +27,14 @@ class TodoService {
     data: object
   ): Promise<void> => {
     const todo = await db.todo.findOne({ where: { user_id, id: todo_id } });
-    if (!todo) {
-      return new Promise((resolve, reject) => {
-        reject({ msg: 'Todo not found' });
-      });
-    }
+    if (!todo) throw { msg: 'Todo not found' };
+
     await db.todo.update(data, { where: { user_id, id: todo_id } });
   };
 
   delete = async (user_id: number, todo_id: number): Promise<void> => {
     const todo = await db.todo.findOne({ where: { user_id, id: todo_id } });
-    if (!todo) {
-      return new Promise((resolve, reject) => {
-        reject({ msg: 'Todo not found' });
-      });
-    }
+    if (!todo) throw { msg: 'Todo not found' };
 
     await db.todo.destroy({ where: { user_id, id: todo_id } });
   };
